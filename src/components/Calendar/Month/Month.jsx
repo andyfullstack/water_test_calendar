@@ -22,16 +22,17 @@ import { ThreeDots } from 'react-loader-spinner';
 import { baseTheme } from '../../../theme';
 
 export const Calendar = dailyNormaState => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const dispatch = useDispatch();
-  const waterForMonth = useSelector(selectorWaterMonth);
+  // аргумент "dailyNormaState" принимаем информацию о дневной норме потребления воды
+  const [currentDate, setCurrentDate] = useState(new Date()); // текущая дата + функция состояния; currentDate = текущая дата
+  const dispatch = useDispatch(); // хук - отправляем действие в стор
+  const waterForMonth = useSelector(selectorWaterMonth); // извлекает значение waterForMonth
   const ref = useRef(null);
-  const isLoading = useSelector(selectorIsLoadingMonth);
+  const isLoading = useSelector(selectorIsLoadingMonth); // загружаются ли данные в текущий месяц.
 
   useEffect(() => {
     const month = `${
       currentDate.getMonth() + 1
-    } - ${currentDate.getFullYear()}`;
+    } - ${currentDate.getFullYear()}`; // выводим текущий месяц и год
 
     dispatch(fetchMonthThunk(month));
   }, [dispatch, currentDate, dailyNormaState]);
