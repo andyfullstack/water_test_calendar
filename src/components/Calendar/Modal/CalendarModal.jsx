@@ -3,16 +3,24 @@ import { CalendarModalStyles } from './CalendarModal.styled';
 const CalendarModal = ({ calendarRef, refData, waterData = {} }) => {
   const { dayOfMonth, waterRate, percent, numberRecords } = waterData;
 
+  //  Здесь получается значение "left" для текущего элемента и контейнера с помощью метода "getBoundingClientRect()".
+  //Вычисляем "delta", которая определяет положение модального окна относительно контейнера.
+
   const currentRef = refData?.current.getBoundingClientRect().left;
   const containerRef = calendarRef?.current.getBoundingClientRect().left;
 
   let position = true;
+
+  // Вычисление разницы между позицией текущего элемента и контейнера.
+  //  Если разница "delta" между текущим элементом и контейнером меньше 250 пикселей, переменная position устанавливается в "false".
 
   const delta = currentRef - containerRef;
   if (delta < 250) {
     position = false;
   }
 
+  // Проверяем наличие данных в "waterData". Если есть данные, отображается информация о потреблении воды за день,
+  // в противном случае отображается сообщение о том, что записей за этот день нет.
   return (
     <CalendarModalStyles $delta={position} $deltaNum={delta}>
       {Object.values(waterData).length ? (
