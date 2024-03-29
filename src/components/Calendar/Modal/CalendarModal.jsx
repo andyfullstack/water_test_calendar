@@ -3,16 +3,16 @@ import { CalendarModalStyles } from './CalendarModal.styled';
 const CalendarModal = ({ calendarRef, refData, waterData = {} }) => {
   const { dayOfMonth, waterRate, percent, numberRecords } = waterData;
 
-  //  Здесь получается значение "left" для текущего элемента и контейнера с помощью метода "getBoundingClientRect()".
-  //Вычисляем "delta", которая определяет положение модального окна относительно контейнера.
+  //  Здесь получаем значение "left" для текущего элемента и контейнера с помощью метода "getBoundingClientRect()".
+  // Вычисляем "delta", которая определяет положение модального окна относительно контейнера.
 
   const currentRef = refData?.current.getBoundingClientRect().left;
   const containerRef = calendarRef?.current.getBoundingClientRect().left;
 
   let position = true;
 
-  // Вычисление разницы между позицией текущего элемента и контейнера.
-  //  Если разница "delta" между текущим элементом и контейнером меньше 250 пикселей, переменная position устанавливается в "false".
+  // Вычисляем разницу между позицией текущего элемента и контейнера.
+  // Если разница "delta" между текущим элементом и контейнером меньше 250 пикселей, переменная position устанавливается в "false".
 
   const delta = currentRef - containerRef;
   if (delta < 250) {

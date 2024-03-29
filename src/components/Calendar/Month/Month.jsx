@@ -22,31 +22,34 @@ import { ThreeDots } from 'react-loader-spinner';
 import { baseTheme } from '../../../theme';
 
 export const Calendar = dailyNormaState => {
-  // аргумент "dailyNormaState" принимаем информацию о дневной норме потребления воды
-  const [currentDate, setCurrentDate] = useState(new Date()); // текущая дата + функция состояния; currentDate = текущая дата
-  const dispatch = useDispatch(); // хук - отправляем действие в стор
-  const waterForMonth = useSelector(selectorWaterMonth); // извлекает значение waterForMonth
+  // аргумент "dailyNormaState" принимаем информацию о дневной норме потребления воды;
+  const [currentDate, setCurrentDate] = useState(new Date()); // текущая дата + функция состояния; currentDate = текущая дата;
+  const dispatch = useDispatch(); // хук - отправляем действие в стор;
+  const waterForMonth = useSelector(selectorWaterMonth); // извлекает значение waterForMonth;
   const ref = useRef(null);
-  const isLoading = useSelector(selectorIsLoadingMonth); // загружаются ли данные в текущий месяц.
+  const isLoading = useSelector(selectorIsLoadingMonth); // загружаются ли данные в текущий месяц;
 
   useEffect(() => {
+    //  запроса на загрузку данных о месяце;
     const month = `${
       currentDate.getMonth() + 1
-    } - ${currentDate.getFullYear()}`; // выводим текущий месяц и год
+    } - ${currentDate.getFullYear()}`; // выводим текущий месяц и год;
 
-    dispatch(fetchMonthThunk(month));
-  }, [dispatch, currentDate, dailyNormaState]);
+    dispatch(fetchMonthThunk(month)); // функция dispatch для отправки действия стор, а "fetchMonthThunk" позволяют нам диспатчить асинхронные действия.;
+  }, [dispatch, currentDate, dailyNormaState]); // функция будет вызываться каждый раз при изменении эл. массива;
 
   const handleNextMonth = () => {
+    // вызове функции handleNextMonth() текущая дата обновляется на первый день следующего месяца;
     const nextMonthDate = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() + 1,
       1
     );
-    setCurrentDate(nextMonthDate);
+    setCurrentDate(nextMonthDate); // устанавливаем новую дату "nextMonthDate" в качестве текущей даты;
   };
 
   const handlePrevMonth = () => {
+    //  переход на предыдущий месяц
     const prevMonthDate = new Date(
       currentDate.getFullYear(),
       currentDate.getMonth() - 1,
@@ -56,6 +59,9 @@ export const Calendar = dailyNormaState => {
   };
 
   const isCurrentMonth = () => {
+    // функция возвращает булево значение, показывающее, является ли текущий месяц тем же самым месяцем, что и у текущей даты.
+    // Сравниваем месяц и год текущей даты с месяцем и годом текущей даты в нашем компоненте currentDate.
+    // Если они совпадают, функция возвращает true, иначе - false.
     const today = new Date();
     return (
       currentDate.getMonth() === today.getMonth() &&
@@ -68,7 +74,7 @@ export const Calendar = dailyNormaState => {
       currentDate.getFullYear(),
       currentDate.getMonth() + 1,
       0
-    ).getDate();
+    ).getDate(); // Определяем по getDaysInMonth количества дней в текущем месяце, через текущий год, месяц и день месяца из объекта "Date".
   };
 
   const renderDays = () => {
@@ -79,6 +85,8 @@ export const Calendar = dailyNormaState => {
         item => item.dayOfMonth && Number(item.dayOfMonth.split(',')[0]) === day
       );
 
+      // отрисовываем компонент "DayComponent" для каждого дня в календаре,
+      // передавая каждому компоненту уникальный ключ, ссылку на родительский элемент календаря, номер дня и % содержание воды для этого дня;
       return (
         <DayComponent
           key={day}
