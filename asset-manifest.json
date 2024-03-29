@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/goit-react-hw-02-feedback/static/css/main.7acaea2f.css",
-    "main.js": "/goit-react-hw-02-feedback/static/js/main.07d62aa7.js",
-    "index.html": "/goit-react-hw-02-feedback/index.html",
-    "main.7acaea2f.css.map": "/goit-react-hw-02-feedback/static/css/main.7acaea2f.css.map",
-    "main.07d62aa7.js.map": "/goit-react-hw-02-feedback/static/js/main.07d62aa7.js.map"
+    "main.css": "/andyfullstack/water_test_calendar/static/css/main.7acaea2f.css",
+    "main.js": "/andyfullstack/water_test_calendar/static/js/main.fdeefe28.js",
+    "index.html": "/andyfullstack/water_test_calendar/index.html",
+    "static/media/sprite.svg": "/andyfullstack/water_test_calendar/static/media/sprite.3fa72254f00244ec265782dc00a0cd92.svg",
+    "main.7acaea2f.css.map": "/andyfullstack/water_test_calendar/static/css/main.7acaea2f.css.map",
+    "main.fdeefe28.js.map": "/andyfullstack/water_test_calendar/static/js/main.fdeefe28.js.map"
   },
   "entrypoints": [
     "static/css/main.7acaea2f.css",
-    "static/js/main.07d62aa7.js"
+    "static/js/main.fdeefe28.js"
   ]
 }
