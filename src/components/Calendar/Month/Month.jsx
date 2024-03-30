@@ -1,10 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMonthThunk } from 'components/redux/month/operations';
-import {
-  selectorIsLoadingMonth,
-  selectorWaterMonth,
-} from 'components/redux/month/selectors';
 
 import Icons from '../../../images/sprite.svg';
 import DayComponent from './Day';
@@ -24,19 +19,8 @@ import { baseTheme } from '../../../theme';
 export const Calendar = dailyNormaState => {
   // аргумент "dailyNormaState" принимаем информацию о дневной норме потребления воды;
   const [currentDate, setCurrentDate] = useState(new Date()); // текущая дата + функция состояния; currentDate = текущая дата;
-  const dispatch = useDispatch(); // хук - отправляем действие в стор;
-  const waterForMonth = useSelector(selectorWaterMonth); // извлекает значение waterForMonth;
+  const [isLoading, setIsLoading] = useState(false); // состояние загрузки;
   const ref = useRef(null);
-  const isLoading = useSelector(selectorIsLoadingMonth); // загружаются ли данные в текущий месяц;
-
-  useEffect(() => {
-    //  запроса на загрузку данных о месяце;
-    const month = `${
-      currentDate.getMonth() + 1
-    } - ${currentDate.getFullYear()}`; // выводим текущий месяц и год;
-
-    dispatch(fetchMonthThunk(month)); // функция dispatch для отправки действия стор, а "fetchMonthThunk" позволяют нам диспатчить асинхронные действия.;
-  }, [dispatch, currentDate, dailyNormaState]); // функция будет вызываться каждый раз при изменении эл. массива;
 
   const handleNextMonth = () => {
     // вызове функции handleNextMonth() текущая дата обновляется на первый день следующего месяца;
@@ -81,18 +65,14 @@ export const Calendar = dailyNormaState => {
     const daysInMonth = getDaysInMonth();
     return Array.from({ length: daysInMonth }, (_, index) => {
       const day = index + 1;
-      const waterPercentage = waterForMonth?.find(
-        item => item.dayOfMonth && Number(item.dayOfMonth.split(',')[0]) === day
-      );
 
-      // отрисовываем компонент "DayComponent" для каждого дня в календаре,
-      // передавая каждому компоненту уникальный ключ, ссылку на родительский элемент календаря, номер дня и % содержание воды для этого дня;
       return (
         <DayComponent
           key={day}
           calendarRef={ref}
           day={day}
-          waterPercentage={waterPercentage}
+          //TODO: вставить процентаж
+          waterPercentage={null}
         />
       );
     });
