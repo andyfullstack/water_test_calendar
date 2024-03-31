@@ -1,24 +1,54 @@
-// import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
-// import {
-//   persistStore,
-//   FLUSH,
-//   REHYDRATE,
-//   PAUSE,
-//   PERSIST,
-//   PURGE,
-//   REGISTER,
-// } from 'redux-persist';
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+// import authSliceReducer from './auth/authSlice';
+// import waterSliceReducer from './water/waterSlice';
+// import themeSliceReducer from './theme/themeSlice';
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
+};
 
-// export const store = configureStore({
-//   reducer: {},
-//   middleware(getDefaultMiddleware) {
-//     return getDefaultMiddleware({
-//       serializableCheck: {
-//         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-//       },
-//     });
-//   },
-// });
+const themePersistConfig = {
+  key: 'theme',
+  storage,
+};
 
-// export const persistor = persistStore(store);
+const persistedThemeReducer = persistReducer(themePersistConfig);
+
+// basic reducer
+const persistedReducer = persistReducer(authPersistConfig);
+
+//...or more reducers
+const rootReducer = combineReducers({
+  auth: persistedReducer,
+  theme: persistedThemeReducer,
+});
+
+const middleware = getDefaultMiddleware =>
+  getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  });
+
+export const store = configureStore({
+  reducer: rootReducer,
+  middleware,
+  // для перегляду стейтів
+  // eslint-disable-next-line no-undef
+  devTools: process.env.NODE_ENV === 'development',
+});
+
+export const persistor = persistStore(store);

@@ -1,16 +1,21 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+axios.defaults.baseURL = 'https://tracker-of-water-oqqk.onrender.com/api';
+export const getCurrentDateInfoAPI = async date => {
+  const { data } = await axios.get('/water', date);
+  return data;
+};
 
-axios.defaults.baseURL = 'https://tracker-of-water-oqqk.onrender.com/api/ ';
+export const getCurrentMonthAPI = async date => {
+  const { data } = await axios.get('/month', date);
+  return data;
+};
 
-export const fetchMonthThunk = createAsyncThunk(
-  ' ',
-  async (month, { rejectWithValue }) => {
-    try {
-      const { data } = await axios.get(`api/water/month?date=${month}`);
-      return data;
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
-  }
-);
+export const getMonthInfoAPI = async month => {
+  const { data } = await axios.get('/month', month);
+  return data;
+};
+
+export const getMonthDateInfoAPI = async date => {
+  const { data } = await axios.get('/month', date);
+  return data;
+};

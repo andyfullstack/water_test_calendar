@@ -1,5 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState, useRef } from 'react';
 
 import Icons from '../../../images/sprite.svg';
 import DayComponent from './Day';
@@ -19,7 +18,7 @@ import { baseTheme } from '../../../theme';
 export const Calendar = dailyNormaState => {
   // аргумент "dailyNormaState" принимаем информацию о дневной норме потребления воды;
   const [currentDate, setCurrentDate] = useState(new Date()); // текущая дата + функция состояния; currentDate = текущая дата;
-  const [isLoading, setIsLoading] = useState(false); // состояние загрузки;
+  const [isLoading] = useState(false); // состояние загрузки;
   const ref = useRef(null);
 
   const handleNextMonth = () => {
